@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <link rel="stylesheet" href="bundle.css">
+
+  <title>Hello app</title>
+</head>
+
+<body>
+
+  <div id="app" class="row">
+
+
+    <!-- til at hente alle -->
+    <div class="col-6">
+      <button @click="GetVaccines">Hent alle Vacciner</button>
+      <div>
+        <!-- Vue command der looper igennem data variablen i vue, og vac referere til den vaccine man er nået til i loopet -->
+        <div v-for="vac in allVaccines" class="fatText">
+          <p>Id: {{vac.id}}</p>
+          <p>Producer: {{vac.producer}}</p>
+          <p>Price: {{vac.price}} DKK</p>
+          <p>Efficiency: {{vac.efficiency}}%</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- hent en og passende fejl besked -->
+
+    <div class="col-6">
+
+      <!-- input felt der bindes ned til dataen i vue delen -->
+      <input type="number" v-model.number="idForSpecific">
+      <!-- knap det kører hent specifik når der klikkes på den -->
+      <button @click="GetSpecificVaccine">Hent en specifik vaccine</button>
+      <!-- en div der kun vises hvis specificVaccines id ikke er null -->
+      <div v-if="specificVaccine.id != null" class="fatText">
+        <!-- her der vises specific id's data -->
+        <p>Id: {{specificVaccine.id}}</p>
+        <p>Producer: {{specificVaccine.producer}}</p>
+        <p>Price: {{specificVaccine.price}} DKK</p>
+        <p>Efficiency: {{specificVaccine.efficiency}}%</p>
+      </div>
+    </div>
+
+
+    <!-- opret ny vaccine -->
+
+    <div class="col-6">
+
+      <h2>Registre a new vaccine</h2>
+      <!-- labels er en "title" til et input felt -->
+      <div>
+        <label for="Producer">Producer:</label>
+        <!-- Input fletet til vores nye vaccines producer navn -->
+        <input name="Producer" type="text" v-model="newVaccProducer">
+      </div>
+      <div>
+        <label for="price">Price:</label>
+        <!-- Input felt til vores nye vaccines pris -->
+        <input name="price" type="number" v-model.number="newVaccPrice">
+      </div>
+      <div>
+        <label for="Efficiency">Efficiency:</label>
+        <!-- input felt til vores nye vaccines efficinecy -->
+        <input type="number" name="Efficiency" v-model.number="newVaccEffi">
+      </div>
+      <button @click="CreateNewVaccine">Create New Vaccine</button>
+    </div>
+
+    <!-- Slet vaccine delen -->
+    <div class="col-6">
+      <h2>DELETE VACCINE!!!</h2>
+
+      <div>
+        <!-- input til det id der skal slettes -->
+        <input type="number" v-model="idToDelete">
+        <!-- knap til slet funktion -->
+        <button @click="DeleteVaccine">DELETE</button>
+      </div>
+    </div>
+
+    <!-- de bedste vacciner -->
+
+    <div class="col-6">
+      <button @click="GetBestVaccines">Get Best Vaccines</button>
+      <div>
+        <div v-for="vac in bestVaccines" class="fatText">
+          <p>Id: {{vac.id}}</p>
+          <p>Producer: {{vac.producer}}</p>
+          <p>Price: {{vac.price}} DKK</p>
+          <p>Efficiency: {{vac.efficiency}}%</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="bundle.js"></script>
+</body>
+
+</html>
